@@ -1,26 +1,12 @@
-import { useState, useEffect } from 'react';
-import { getHebrewDate, getParasha, getUpcomingHoliday } from '@/utils/hebrewDate';
-
 const HebrewDateDisplay = () => {
-  const [hebrewDate, setHebrewDate] = useState('');
-  const [parasha, setParasha] = useState('');
-  const [holiday, setHoliday] = useState<{ name: string; date: string } | null>(null);
-
-  useEffect(() => {
-    setHebrewDate(getHebrewDate());
-    setParasha(getParasha());
-    setHoliday(getUpcomingHoliday());
-  }, []);
-
   return (
-    <div className="text-right space-y-2">
-      <div className="text-xl">{hebrewDate}</div>
-      <div className="text-lg">פרשת השבוע: {parasha}</div>
-      {holiday && (
-        <div className="text-lg">
-          חג קרוב: {holiday.name} - {holiday.date}
-        </div>
-      )}
+    <div className="text-board-panel text-center space-y-2">
+      <div className="text-xl hebrew-text">כ"ה שבט תשפ"ד</div>
+      <div className="text-lg hebrew-text">February 4, 2024</div>
+      <div className="text-lg hebrew-text">פרשת משפטים</div>
+      <div className="text-lg hebrew-text mt-2">
+        חג קרוב: פורים - י"ד אדר
+      </div>
     </div>
   );
 };
