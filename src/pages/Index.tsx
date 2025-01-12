@@ -1,5 +1,6 @@
 import DigitalClock from "@/components/DigitalClock";
 import InfoPanel from "@/components/InfoPanel";
+import HebrewDateDisplay from "@/components/HebrewDateDisplay";
 
 const prayerTimes = [
   { name: "שחרית", time: "06:30" },
@@ -22,7 +23,10 @@ const Index = () => {
             <h1 className="text-4xl font-bold text-board-panel mb-4 hebrew-text">
               בית הכנסת המרכזי
             </h1>
-            <DigitalClock />
+            <div className="flex justify-between items-center">
+              <DigitalClock />
+              <HebrewDateDisplay />
+            </div>
           </div>
 
           {/* Main Grid */}
