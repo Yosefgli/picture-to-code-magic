@@ -1,8 +1,8 @@
-import { HebrewCalendar, HDate, Location, Event } from '@hebcal/core';
+import { HebrewCalendar, HDate, Event } from '@hebcal/core';
 
 export const getHebrewDate = () => {
   const today = new HDate();
-  return today.toString('h');
+  return today.renderGematriya();
 };
 
 export const getParasha = () => {
@@ -14,8 +14,10 @@ export const getParasha = () => {
   });
 
   const thisWeeksParasha = events.find((ev: Event) => {
+    const eventDate = ev.getDate();
+    const currentDate = new HDate();
     return ev.getDesc().includes('Parashat') && 
-           ev.getDate().gt(new HDate()) && 
+           eventDate.abs() > currentDate.abs() && 
            ev.getDesc() !== 'Parashat';
   });
 
@@ -27,15 +29,18 @@ export const getUpcomingHoliday = () => {
   const events = HebrewCalendar.calendar({
     year: today.getFullYear(),
     isHebrewYear: false,
-    holidays: true,
+    noHolidays: false,
   });
 
-  const nextHoliday = events.find((ev: Event) => 
-    ev.getDate().gt(new HDate()) && ev.getFlags().includes('MAJOR_HOLIDAY')
-  );
+  const nextHoliday = events.find((ev: Event) => {
+    const eventDate = ev.getDate();
+    const currentDate = new HDate();
+    return eventDate.abs() > currentDate.abs() && 
+           (ev.getFlags() & Event.MAJOR_HOLIDAY) !== 0;
+  });
 
   return nextHoliday ? {
     name: nextHoliday.render('he'),
-    date: nextHoliday.getDate().toString('h')
+    date: nextHoliday.getDate().renderGematriya()
   } : null;
 };
